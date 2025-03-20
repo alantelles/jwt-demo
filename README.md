@@ -1,3 +1,10 @@
+# jwt-demo
+### App de demonstração de uso de JWT com Micronaut
+
+Este serviço implementa endpoints protegidos para demonstrar as possibilidades de controle de acesso utilizando JWT e segregando o acesso pelas devidas *roles* do usuário.
+
+___
+___
 ## Micronaut 4.7.6 Documentation
 
 - [User Guide](https://docs.micronaut.io/4.7.6/guide/index.html)
