@@ -67,10 +67,10 @@ class LoginService implements HttpRequestAuthenticationProvider<UsernamePassword
         }
         String token = jwtTokenGenerator.generateToken(Authentication.build(
                 credentials.clientId,
-                ['ADMIN'],
+                authed.roles,
                 [isService: true]), DEFAULT_SERVICE_ACCESS_EXPIRES_IN).get()
         return new BearerAccessRefreshToken(
-                credentials.clientId, ['ADMIN'], DEFAULT_SERVICE_ACCESS_EXPIRES_IN,
+                credentials.clientId, authed.roles, DEFAULT_SERVICE_ACCESS_EXPIRES_IN,
                 token, null, TOKEN_TYPE
         )
     }
