@@ -87,6 +87,7 @@ class LoginControllerSpec extends Specification {
         mapped.access_token
         jwt.JWTClaimsSet.issuer == "jwt-demo"
         jwt.JWTClaimsSet.subject == "updater-app"
+        jwt.JWTClaimsSet.getClaim('isService')
 
     }
 
