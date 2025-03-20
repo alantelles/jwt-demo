@@ -61,4 +61,33 @@ class LoginControllerSpec extends Specification {
 
     }
 
+    @SuppressWarnings('GroovyAssignabilityCheck')
+    def 'retorna um token coerente para o caso de login de servico bem sucedido'() {
+        given:
+        String loginData = """{
+            "clientId": "updater-app", 
+            "secret": "meu-client-secret-que-precisa-ser-grande"
+        }"""
+
+        when:
+        HttpResponse<String> response = client.toBlocking().exchange(
+                HttpRequest.POST('/token', loginData), String
+        )
+        String loginResponse = response.body()
+        Map<String, Object> mapped = mapper.readValue(loginResponse, Map)
+        //noinspection GroovyUncheckedAssignmentOfMemberOfRawType
+        JWT jwt = validator.validate(mapped.access_token, null).orElse(null)
+
+
+        then:
+        response.status == HttpStatus.OK
+        mapped.token_type == 'Bearer'
+        mapped.roles[0] == 'UPDATER'
+        mapped.expires_in
+        mapped.access_token
+        jwt.JWTClaimsSet.issuer == "jwt-demo"
+        jwt.JWTClaimsSet.subject == "updater-app"
+
+    }
+
 }
